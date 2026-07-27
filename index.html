@@ -330,15 +330,38 @@ const INK = "#1A1A1A";
 const GRAY = "#666666";
 const LINE = "#E5E1DC";
 
+// ── Brand identity (build script overrides these per school) ──────
+const BRAND_SCHOOL = "Weber State University";
+const BRAND_COURSE = "FAM 3850 \u00b7 Research Methods";
+const BRAND_HASHTAG = "#WeAreWeber";
+const BRAND_LOGO = "wsu-logo.png";
+
 // ── The analysis catalog ───────────────────────────────────────────
 // Each method carries everything the three views need.
+// ── Instruments referenced in the examples (APA 7th) ──────────────
+const REFERENCES = [{
+  m: "Alabama Parenting Questionnaire (APQ)",
+  apa: "Frick, P. J. (1991). The Alabama Parenting Questionnaire. University of Alabama."
+}, {
+  m: "Conflict Tactics Scales (CTS2)",
+  apa: "Straus, M. A., Hamby, S. L., Boney-McCoy, S., & Sugarman, D. B. (1996). The Revised Conflict Tactics Scales (CTS2): Development and preliminary psychometric data. Journal of Family Issues, 17(3), 283\u2013316."
+}, {
+  m: "Couples Satisfaction Index (CSI-4)",
+  apa: "Funk, J. L., & Rogge, R. D. (2007). Testing the ruler with item response theory: Increasing precision of measurement for relationship satisfaction with the Couples Satisfaction Index. Journal of Family Psychology, 21(4), 572\u2013583."
+}, {
+  m: "Family Assessment Device (FAD)",
+  apa: "Epstein, N. B., Baldwin, L. M., & Bishop, D. S. (1983). The McMaster Family Assessment Device. Journal of Marital and Family Therapy, 9(2), 171\u2013180."
+}, {
+  m: "Parenting Stress Index (PSI)",
+  apa: "Abidin, R. R. (2012). Parenting Stress Index (4th ed.). Psychological Assessment Resources."
+}];
 const METHODS = [{
   id: "ttest_ind",
   name: "Independent-samples t-test",
   family: "quant",
   tag: "Compare 2 groups",
   when: "You are comparing the average of one continuous outcome between two separate groups.",
-  example: "Do clients in emotionally focused therapy report lower relationship distress than clients on a waitlist?",
+  example: "Do couples completing emotionally focused therapy report higher satisfaction on the Couples Satisfaction Index (CSI-4) than couples on a waitlist?",
   needs: "One continuous outcome, one grouping variable with exactly two independent groups.",
   reports: "Group means, t, df, p, and an effect size (Cohen's d).",
   dv: "continuous",
@@ -351,7 +374,7 @@ const METHODS = [{
   family: "quant",
   tag: "Before / after",
   when: "You are comparing the same people at two time points, or two matched conditions.",
-  example: "Do couples score higher on a communication measure after an 8-week program than they did before it?",
+  example: "Do parents report lower stress on the Parenting Stress Index (PSI) after an 8-week parent-training program than they did before it?",
   needs: "One continuous outcome measured twice on the same participants.",
   reports: "Mean difference, t, df, p, and Cohen's d for paired data.",
   dv: "continuous",
@@ -364,7 +387,7 @@ const METHODS = [{
   family: "quant",
   tag: "Compare 3+ groups",
   when: "You are comparing the average of one continuous outcome across three or more groups.",
-  example: "Does perceived support differ across three parenting styles: authoritative, permissive, and uninvolved?",
+  example: "Does general family functioning on the Family Assessment Device (FAD) differ across three family types: two-parent, single-parent, and blended?",
   needs: "One continuous outcome, one grouping variable with three or more independent groups.",
   reports: "F, df, p, an effect size (eta-squared), and post-hoc comparisons if significant.",
   dv: "continuous",
@@ -377,7 +400,7 @@ const METHODS = [{
   family: "quant",
   tag: "Relationship",
   when: "You are measuring how strongly two continuous variables move together, with no direction implied.",
-  example: "Is relationship satisfaction associated with the frequency of shared leisure time?",
+  example: "Is couple satisfaction on the Couples Satisfaction Index (CSI-4) associated with the frequency of shared leisure time?",
   needs: "Two continuous variables measured on the same participants.",
   reports: "The correlation coefficient r, p, and the direction and strength of the relationship.",
   dv: "continuous",
@@ -390,7 +413,7 @@ const METHODS = [{
   family: "quant",
   tag: "Predict an outcome",
   when: "You are predicting one continuous outcome from two or more predictors at once.",
-  example: "Do income, conflict frequency, and years together jointly predict relationship satisfaction?",
+  example: "Do parenting stress (PSI), positive parenting practices (Alabama Parenting Questionnaire), and years married jointly predict Couples Satisfaction Index (CSI-4) scores?",
   needs: "One continuous outcome and two or more predictors (continuous or coded categorical).",
   reports: "Overall model fit (R-squared), each predictor's coefficient, and its significance.",
   dv: "continuous",
@@ -403,7 +426,7 @@ const METHODS = [{
   family: "quant",
   tag: "Categories",
   when: "You are testing whether two categorical variables are related.",
-  example: "Is completion of therapy (completed vs. dropped out) related to referral source?",
+  example: "Is completion of couple therapy, versus dropping out, related to whether the couple scored in the distressed range on the Couples Satisfaction Index (CSI-4)?",
   needs: "Two categorical variables; each participant falls into one cell of a cross-tab.",
   reports: "The chi-square statistic, df, p, and an effect size (Cramer's V).",
   dv: "categorical",
@@ -416,7 +439,7 @@ const METHODS = [{
   family: "quant",
   tag: "How / why",
   when: "You believe one variable transmits the effect of another onto an outcome.",
-  example: "Does emotional regulation explain the link between attachment security and relationship satisfaction?",
+  example: "Does parenting stress (PSI) explain the link between couple conflict on the Conflict Tactics Scales (CTS2) and children's family-functioning ratings on the Family Assessment Device (FAD)?",
   needs: "A predictor, a proposed mediator, and an outcome, ideally with a rationale for the causal order.",
   reports: "The indirect (mediated) effect, direct effect, and confidence intervals from bootstrapping.",
   dv: "continuous",
@@ -429,7 +452,7 @@ const METHODS = [{
   family: "quant",
   tag: "Nested data",
   when: "Your data are nested: partners within couples, clients within therapists, students within schools.",
-  example: "Do partners within the same couple influence each other's reported closeness over time?",
+  example: "Within couples, do both partners' Couples Satisfaction Index (CSI-4) scores influence each other's reported family functioning on the Family Assessment Device (FAD) over time?",
   needs: "An outcome measured on units that are grouped, so observations are not fully independent.",
   reports: "Fixed effects (your predictors) and random effects (variation across the grouping units).",
   dv: "continuous",
@@ -444,7 +467,7 @@ const METHODS = [{
   family: "qual",
   tag: "Patterns of meaning",
   when: "You want to identify, organize, and interpret recurring themes across your data.",
-  example: "What themes emerge when stepparents describe the first year of a blended household?",
+  example: "What themes emerge when parents describe, in open-ended interviews, the experiences behind their high scores on the Parenting Stress Index (PSI)?",
   needs: "Interview or open-ended text data, and a coding process (inductive or against a framework).",
   reports: "A set of themes with supporting excerpts, plus your credibility practices.",
   design: "flexible"
@@ -454,7 +477,7 @@ const METHODS = [{
   family: "qual",
   tag: "Lived experience",
   when: "You want a close reading of how a few people make sense of a significant experience.",
-  example: "How do foster parents experience a reunification that ultimately fails?",
+  example: "How do couples who score in the distressed range on the Couples Satisfaction Index (CSI-4) make sense of a turning point in their relationship?",
   needs: "A small, homogeneous sample and rich, first-person interview accounts.",
   reports: "Superordinate and subordinate themes grounded in participants' own words.",
   design: "phenomenology"
@@ -464,7 +487,7 @@ const METHODS = [{
   family: "qual",
   tag: "Build a theory",
   when: "You want to build an explanatory theory from the data rather than test an existing one.",
-  example: "What process do couples move through as they rebuild trust after an affair?",
+  example: "What process do couples move through as they rebuild trust after conflict, using interviews alongside their Conflict Tactics Scales (CTS2) reports?",
   needs: "Iterative data collection and coding, continuing until categories reach saturation.",
   reports: "A grounded theory or process model, with open, axial, and selective coding documented.",
   design: "grounded theory"
@@ -474,7 +497,7 @@ const METHODS = [{
   family: "qual",
   tag: "Systematic coding",
   when: "You want to categorize data systematically, sometimes counting how often themes appear.",
-  example: "How often, and in what ways, is 'boundaries' discussed across a set of therapy transcripts?",
+  example: "How often, and in what ways, do the family-functioning domains of the Family Assessment Device (FAD) appear across a set of family-therapy session transcripts?",
   needs: "A coding scheme applied consistently across documents or transcripts.",
   reports: "Category frequencies and definitions, with inter-coder agreement where relevant.",
   design: "flexible"
@@ -788,9 +811,9 @@ function AnalysisDashboard() {
       marginBottom: 16,
       flexWrap: "wrap"
     }
-  }, /*#__PURE__*/React.createElement("img", {
-    src: "wsu-logo.png",
-    alt: "Weber State University logo",
+  }, BRAND_LOGO ? /*#__PURE__*/React.createElement("img", {
+    src: BRAND_LOGO,
+    alt: BRAND_SCHOOL + " logo",
     style: {
       height: 44,
       width: "auto",
@@ -799,7 +822,7 @@ function AnalysisDashboard() {
     onError: e => {
       e.currentTarget.style.display = "none";
     }
-  }), /*#__PURE__*/React.createElement("div", {
+  }) : null, /*#__PURE__*/React.createElement("div", {
     style: {
       display: "flex",
       flexDirection: "column"
@@ -812,7 +835,7 @@ function AnalysisDashboard() {
       color: MAROON,
       lineHeight: 1.1
     }
-  }, "Weber State University"), /*#__PURE__*/React.createElement("span", {
+  }, BRAND_SCHOOL), /*#__PURE__*/React.createElement("span", {
     style: {
       fontSize: 12,
       fontWeight: 700,
@@ -820,7 +843,7 @@ function AnalysisDashboard() {
       color: GRAY,
       textTransform: "uppercase"
     }
-  }, "FAM 3850 \xA0·\xA0 Research Methods")), /*#__PURE__*/React.createElement("span", {
+  }, BRAND_COURSE)), BRAND_HASHTAG ? /*#__PURE__*/React.createElement("span", {
     style: {
       marginLeft: "auto",
       fontFamily: "Cambria, Georgia, serif",
@@ -829,7 +852,7 @@ function AnalysisDashboard() {
       color: MAROON,
       letterSpacing: 0.5
     }
-  }, "#WeAreWeber")), /*#__PURE__*/React.createElement("div", {
+  }, BRAND_HASHTAG) : null), /*#__PURE__*/React.createElement("div", {
     style: {
       borderLeft: `3px solid ${MAROON}`,
       paddingLeft: 16
@@ -858,7 +881,7 @@ function AnalysisDashboard() {
       borderBottom: `1px solid ${LINE}`,
       flexWrap: "wrap"
     }
-  }, btn("tree", "Guide me"), btn("table", "Browse all"), btn("plan", `My plan${plan.length ? ` (${plan.length})` : ""}`)), /*#__PURE__*/React.createElement("div", {
+  }, btn("tree", "Guide me"), btn("table", "Browse all"), btn("plan", `My plan${plan.length ? ` (${plan.length})` : ""}`), btn("refs", "References")), /*#__PURE__*/React.createElement("div", {
     style: {
       padding: "24px 26px 36px"
     }
@@ -1085,7 +1108,45 @@ function AnalysisDashboard() {
     }
   }, "Reports:"), " ", m.reports))), /*#__PURE__*/React.createElement(ExportBox, {
     plan: plan
-  })))), /*#__PURE__*/React.createElement("div", {
+  }))), view === "refs" && /*#__PURE__*/React.createElement("div", null, /*#__PURE__*/React.createElement("p", {
+    style: {
+      fontSize: 15,
+      lineHeight: 1.7,
+      margin: "0 0 20px"
+    }
+  }, "The examples in this tool name real, published instruments from family studies. Full citations in APA 7th edition are below. Use them if you reference an instrument in your own proposal."), /*#__PURE__*/React.createElement("p", {
+    style: {
+      fontSize: 10,
+      fontWeight: 700,
+      letterSpacing: 2,
+      textTransform: "uppercase",
+      color: GRAY,
+      borderBottom: `1px solid ${LINE}`,
+      paddingBottom: 8,
+      margin: "0 0 16px"
+    }
+  }, "References"), REFERENCES.map(r => /*#__PURE__*/React.createElement("div", {
+    key: r.m,
+    style: {
+      marginBottom: 16,
+      paddingLeft: 28,
+      textIndent: -28
+    }
+  }, /*#__PURE__*/React.createElement("p", {
+    style: {
+      fontSize: 13.5,
+      lineHeight: 1.6,
+      color: INK,
+      margin: 0
+    }
+  }, r.apa))), /*#__PURE__*/React.createElement("p", {
+    style: {
+      fontSize: 12,
+      color: GRAY,
+      fontStyle: "italic",
+      marginTop: 18
+    }
+  }, "The Alabama Parenting Questionnaire is commonly cited as Frick (1991); confirm the exact edition and citation your instructor prefers before using it in a submitted proposal."))), /*#__PURE__*/React.createElement("div", {
     style: {
       padding: "14px 26px",
       borderTop: `1px solid ${LINE}`,
@@ -1193,7 +1254,7 @@ function ExportBox({
     root.render(React.createElement(AnalysisDashboard));
   } catch (e) {
     document.getElementById("root").innerHTML =
-      '<div style="padding:24px;font-family:Arial;color:#492365;">The tool failed to load. Error: ' +
+      '<div style="padding:24px;font-family:Arial;color:#a1a1a4;">The tool failed to load. Error: ' +
       (e && e.message ? e.message : e) + '</div>';
   }
 })();
